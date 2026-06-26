@@ -1,7 +1,7 @@
 import {v2 as cloudinary} from "cloudinary";
 import fs from "fs";
 
-const uploadOnCloudinary= async ()=>{
+const uploadOnCloudinary= async (localFilePath)=>{
   try{
     if(!localFilePath) return null
 
@@ -10,7 +10,8 @@ const uploadOnCloudinary= async ()=>{
       resource_type:"auto"
     })
     //file has been uploded sucessfully
-    console.log("File has been uplaoded successfully",response.url);
+    // console.log("File has been uplaoded successfully",response.url);
+    fs.unlinkSync(localFilePath)
     return response;
 
   }catch(error){
@@ -20,7 +21,9 @@ const uploadOnCloudinary= async ()=>{
 }
 
  cloudinary.config({ 
-        cloud_name: process.env.CLOUDINARY_CLOUD-NAME, 
-        api_key: CLOUDINARY_API_KEY, 
-        api_secret: CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+        api_key: process.env.CLOUDINARY_API_KEY, 
+        api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
     });
+
+    export {uploadOnCloudinary}
